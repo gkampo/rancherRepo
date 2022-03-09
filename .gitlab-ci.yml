@@ -1,14 +1,16 @@
 image: docker:19.03.12
+
+variables:
+  RELEASE_IMAGE: harbor.ba.de/it-betrieb-ci-cd/ci-cd-test-python:latest
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_TLS_CERTDIR: ""
+
 services:
   - docker:19.03.12-dind
 
 stages:
 - build
 #- release
-
-variables:
-  RELEASE_IMAGE: harbor.ba.de/it-betrieb-ci-cd/ci-cd-test-python:latest
-  DOCKER_DRIVER: overlay2
 
 before_script:
   - docker login -u robot$it-betrieb-ci-cd+gitlab -p $CI_GITLAB_PASSWORD harbor.ba.de
