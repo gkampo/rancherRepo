@@ -1,12 +1,5 @@
-image: docker:19.03.12
-
 variables:
   RELEASE_IMAGE: harbor.ba.de/it-betrieb-ci-cd/ci-cd-test-python:latest
-  DOCKER_HOST: tcp://docker:2375
-  DOCKER_TLS_CERTDIR: ""
-
-services:
-  - docker:19.03.12-dind
 
 stages:
 - build
