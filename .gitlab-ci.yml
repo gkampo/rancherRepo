@@ -6,7 +6,7 @@ stages:
 #- release
 
 before_script:
-  - docker login -u robot$it-betrieb-ci-cd+gitlab -p $CI_GITLAB_PASSWORD harbor.ba.de
+  - docker login -u 'robot$it-betrieb-ci-cd+gitlab' -p $CI_GITLAB_PASSWORD harbor.ba.de
 
 build:
   stage: build
