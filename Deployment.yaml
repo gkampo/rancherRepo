@@ -1,0 +1,57 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ci-cd-app
+  labels:
+    app: ci-cd-app
+  namespace: ci-cd-test
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ci-cd-app
+  template:
+    metadata:
+      labels:
+        app: ci-cd-app
+    spec:
+      containers:
+      - name: ci-cd-app
+        image: harbor.ba.de/it-betrieb-ci-cd/ci-cd-test-python:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ci-cd-service
+  namespace: ci-cd-test
+spec:
+  selector:
+    app: ci-cd-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ci-cd-ingress
+  namespace: ci-cd-test
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ci-cd-service
+            port:
+              number: 80
+---
