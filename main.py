@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import time
 
-hostName = "ci-cd-test.ba.de"
+hostName = "localhost"
 serverPort = 8080
 
 class MyServer(BaseHTTPRequestHandler):
