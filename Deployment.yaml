@@ -20,6 +20,8 @@ spec:
       - name: ci-cd-app
         image: harbor.ba.de/it-betrieb-ci-cd/ci-cd-test-python:latest
         imagePullPolicy: Always
+        imagePullSecrets:
+        - name: harbor-ci-cd-reg
         ports:
         - containerPort: 8080
 ---
