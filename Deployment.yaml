@@ -20,10 +20,10 @@ spec:
       - name: ci-cd-app
         image: harbor.ba.de/it-betrieb-ci-cd/ci-cd-test-python:latest
         imagePullPolicy: Always
-        imagePullSecrets:
-        - name: harbor-ci-cd-reg
         ports:
         - containerPort: 8080
+      imagePullSecrets:
+        - name: harbor-ci-cd-reg
 ---
 apiVersion: v1
 kind: Service
@@ -43,17 +43,17 @@ kind: Ingress
 metadata:
   name: ci-cd-ingress
   namespace: ci-cd-test
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
-  - http:
+  - host: ci-cd-test.ba.de
+    http:
       paths:
-      - path: /
-        pathType: Prefix
-        backend:
+      - backend:
           service:
             name: ci-cd-service
             port:
               number: 80
+        path: /
+        pathType: Prefix
 ---
